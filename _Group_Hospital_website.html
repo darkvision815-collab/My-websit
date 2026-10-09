@@ -845,7 +845,7 @@
                             <div>
                                 <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Clinic Logo Image URL (Strict 1:1 Square Constraint)</label>
                                 <div class="flex items-center space-x-4">
-                                    <input type="url" id="cms-logo-url" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" oninput="previewLogoUrl(this.value)">
+                                    <input type="upload" id="cms-logo-url" placeholder="photo upload" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" oninput="previewLogoUrl(this.value)">
                                     <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center flex-shrink-0">
                                         <img id="logo-preview-box" src="" class="w-full h-full aspect-square-logo object-cover hidden" onerror="this.classList.add('hidden')">
                                         <i class="fa-solid fa-heart-pulse text-brand-600 text-lg" id="logo-preview-fallback"></i>
@@ -1059,8 +1059,8 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Photo URL (Strict 3:2 Ratio Banner Style) *</label>
-                    <input type="url" id="doc-img" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" placeholder="https://images.unsplash.com/...">
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Photo Upload (Strict 3:2 Ratio Banner Style) *</label>
+                    <input type="upload" id="doc-img" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" placeholder="upload image">
                     <span class="text-[11px] text-slate-400 mt-1 block">Renders with strict 3:2 landscape/portrait constraint.</span>
                 </div>
                 <div>
