@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AuraCare Medical & Specialty Clinic | Professional Healthcare</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Admin Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        /* Strict Aspect Ratio Utilities */
+        .aspect-square-logo {
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+        .aspect-doctor-photo {
+            aspect-ratio: 3 / 2;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- NAVIGATION BAR -->
+    <header id="main-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Clinic Name -->
+            <a href="#home" onclick="switchView('public')" class="flex items-center space-x-3 group">
+                <div id="nav-logo-container" class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-600 to-medical-500 flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform overflow-hidden">
+                    <!-- Dynamic or Default Logo Image/Icon -->
+                    <i class="fa-solid fa-heart-pulse text-xl" id="nav-logo-icon"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight text-slate-900">Aura<span class="text-brand-600">Care</span></span>
+                    <span class="block text-xs font-medium text-slate-500 tracking-wider uppercase">Medical Clinic</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="#home" onclick="switchView('public')" class="font-medium text-slate-600 hover:text-brand-600 transition-colors">Home</a>
+                <a href="#about" onclick="switchView('public')" class="font-medium text-slate-600 hover:text-brand-600 transition-colors">About</a>
+                <a href="#doctors" onclick="switchView('public')" class="font-medium text-slate-600 hover:text-brand-600 transition-colors">Doctors</a>
+                <a href="#specialties" onclick="switchView('public')" class="font-medium text-slate-600 hover:text-brand-600 transition-colors">Specialties</a>
+                <a href="#services" onclick="switchView('public')" class="font-medium text-slate-600 hover:text-brand-600 transition-colors">Services</a>
+                <a href="#faq" onclick="switchView('public')" class="font-medium text-slate-600 hover:text-brand-600 transition-colors">FAQ</a>
+                <a href="#contact" onclick="switchView('public')" class="font-medium text-slate-600 hover:text-brand-600 transition-colors">Contact</a>
+            </nav>
+
+            <!-- Right CTA & Admin Switch -->
+            <div class="hidden lg:flex items-center space-x-4">
+                <div class="text-right border-r border-slate-200 pr-4">
+                    <span class="block text-xs text-slate-400 font-medium">Emergency Line</span>
+                    <a href="tel:+18005559876" class="text-sm font-bold text-slate-800 hover:text-brand-600 transition-colors">+1 (800) 555-9876</a>
+                </div>
+                <button onclick="openBookingModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-5 py-2.5 rounded-xl shadow-md shadow-brand-600/20 transition-all hover:shadow-lg hover:shadow-brand-600/30 flex items-center space-x-2">
+                    <i class="fa-regular fa-calendar-check"></i>
+                    <span>Book Appointment</span>
+                </button>
+                <button onclick="openAdminLogin()" class="p-2.5 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition-colors relative group" title="Admin Portal">
+                    <i class="fa-solid fa-lock text-lg"></i>
+                    <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">Admin Area</span>
+                </button>
+            </div>
+
+            <!-- Mobile Menu & Call Buttons -->
+            <div class="flex items-center space-x-2 lg:hidden">
+                <a href="tel:+18005559876" class="p-2.5 rounded-xl bg-medical-50 text-medical-600 hover:bg-medical-100 transition-colors" title="Call Clinic">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+                <button onclick="toggleMobileMenu()" class="p-2.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors">
+                    <i id="mobile-menu-icon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-6 space-y-3 shadow-xl">
+            <a href="#home" onclick="switchView('public'); toggleMobileMenu();" class="block py-2 px-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50">Home</a>
+            <a href="#about" onclick="switchView('public'); toggleMobileMenu();" class="block py-2 px-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50">About</a>
+            <a href="#doctors" onclick="switchView('public'); toggleMobileMenu();" class="block py-2 px-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50">Doctors</a>
+            <a href="#specialties" onclick="switchView('public'); toggleMobileMenu();" class="block py-2 px-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50">Specialties</a>
+            <a href="#services" onclick="switchView('public'); toggleMobileMenu();" class="block py-2 px-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50">Services</a>
+            <a href="#faq" onclick="switchView('public'); toggleMobileMenu();" class="block py-2 px-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50">FAQ</a>
+            <a href="#contact" onclick="switchView('public'); toggleMobileMenu();" class="block py-2 px-3 rounded-lg font-medium text-slate-700 hover:bg-slate-50">Contact</a>
+            <div class="pt-2 flex flex-col space-y-2">
+                <button onclick="openBookingModal(); toggleMobileMenu();" class="w-full bg-brand-600 text-white font-medium py-3 rounded-xl shadow-md text-center">
+                    <i class="fa-regular fa-calendar-check mr-2"></i> Book Appointment
+                </button>
+                <button onclick="openAdminLogin(); toggleMobileMenu();" class="w-full bg-slate-100 text-slate-700 font-medium py-2.5 rounded-xl text-center">
+                    <i class="fa-solid fa-lock mr-2"></i> Admin Portal
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- PUBLIC WEBSITE CONTAINER -->
+    <div id="public-website-view" class="block">
+        
+        <!-- HERO SECTION -->
+        <section id="home" class="relative overflow-hidden bg-gradient-to-b from-brand-50/50 via-white to-slate-50 py-16 lg:py-24">
+            <div class="absolute inset-0 bg-[radial-gradient(#0284c7_1px,transparent_1px)] [background-size:16px_16px] opacity-10 pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-medical-50 border border-medical-100 text-medical-700 text-xs font-semibold uppercase tracking-wider">
+                            <span class="w-2 h-2 rounded-full bg-medical-500 animate-pulse"></span>
+                            <span>Accepting New Patients & Emergency Care</span>
+                        </div>
+                        <h1 id="hero-title-display" class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+                            Compassionate Healthcare <br>
+                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-medical-600">You Can Trust</span>
+                        </h1>
+                        <p id="hero-desc-display" class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                            Expert medical care focused on your health, comfort and well-being. State-of-the-art diagnostic facilities and dedicated specialist physicians providing personalized treatment plans.
+                        </p>
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-3 sm:space-y-0 sm:space-x-4 pt-4">
+                            <button onclick="openBookingModal()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg shadow-brand-600/25 transition-all hover:scale-105 flex items-center justify-center space-x-3 text-base">
+                                <i class="fa-regular fa-calendar-check text-lg"></i>
+                                <span>Book Appointment</span>
+                            </button>
+                            <a href="tel:+18005559876" class="w-full sm:w-auto bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-semibold px-8 py-4 rounded-xl shadow-sm transition-all flex items-center justify-center space-x-3 text-base">
+                                <i class="fa-solid fa-phone text-medical-600"></i>
+                                <span>Call Clinic Now</span>
+                            </a>
+                        </div>
+                        <!-- Quick Mini Badges -->
+                        <div class="grid grid-cols-3 gap-4 pt-8 border-t border-slate-200/80">
+                            <div class="text-center lg:text-left">
+                                <span class="block text-2xl lg:text-3xl font-bold text-slate-900">15+</span>
+                                <span class="text-xs text-slate-500 font-medium">Years Experience</span>
+                            </div>
+                            <div class="text-center lg:text-left border-x border-slate-200 px-4">
+                                <span class="block text-2xl lg:text-3xl font-bold text-slate-900">25,000+</span>
+                                <span class="text-xs text-slate-500 font-medium">Patients Served</span>
+                            </div>
+                            <div class="text-center lg:text-left">
+                                <span class="block text-2xl lg:text-3xl font-bold text-slate-900">12</span>
+                                <span class="text-xs text-slate-500 font-medium">Specialized Doctors</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="lg:col-span-5 relative">
+                        <div class="relative mx-auto max-w-md lg:max-w-none">
+                            <div class="absolute -inset-4 bg-gradient-to-tr from-brand-500 to-medical-500 rounded-3xl opacity-20 blur-2xl"></div>
+                            <div class="relative bg-white p-4 rounded-3xl shadow-xl border border-slate-100">
+                                <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=800&q=80" alt="Lead Physician Dr. Sarah Jenkins" class="rounded-2xl w-full h-[400px] object-cover object-top aspect-doctor-photo" onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=Dr.+Sarah+Jenkins'">
+                                <div class="absolute bottom-8 left-8 right-8 bg-white/95 backdrop-blur-md p-4 rounded-2xl shadow-lg border border-slate-100 flex items-center space-x-4">
+                                    <div class="w-12 h-12 rounded-xl bg-medical-500 text-white flex items-center justify-center text-xl flex-shrink-0">
+                                        <i class="fa-solid fa-user-doctor"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-slate-900 text-sm">Dr. Sarah Jenkins, MD</h4>
+                                        <p class="text-xs text-slate-500">Chief Medical Director & Cardiologist</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUST & CREDIBILITY BAR -->
+        <section class="bg-slate-900 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div class="space-y-1">
+                        <div class="text-brand-400 text-3xl mb-2"><i class="fa-solid fa-hospital-user"></i></div>
+                        <h3 class="text-2xl font-bold">25K+</h3>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-medium">Satisfied Patients</p>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-medical-400 text-3xl mb-2"><i class="fa-solid fa-award"></i></div>
+                        <h3 class="text-2xl font-bold">15 Years</h3>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-medium">Excellence in Care</p>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-brand-400 text-3xl mb-2"><i class="fa-solid fa-stethoscope"></i></div>
+                        <h3 class="text-2xl font-bold">8 Specialties</h3>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-medium">Comprehensive Medicine</p>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="text-medical-400 text-3xl mb-2"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                        <h3 class="text-2xl font-bold">Mon-Sat</h3>
+                        <p class="text-xs text-slate-400 uppercase tracking-wider font-medium">8:00 AM - 8:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT CLINIC & DOCTOR -->
+        <section id="about" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-50 text-brand-700 text-xs font-semibold uppercase tracking-wider">
+                            <span>About AuraCare Clinic</span>
+                        </div>
+                        <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">
+                            Dedicated to Providing Exceptional Medical Excellence
+                        </h2>
+                        <p class="text-slate-600 leading-relaxed">
+                            Founded in 2011, AuraCare Medical Clinic has grown into a trusted healthcare cornerstone. Our philosophy centers on patient-first preventative medicine, accurate diagnosis, and empathetic recovery management.
+                        </p>
+                        <div class="space-y-4 pt-2">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 rounded-lg bg-medical-50 text-medical-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-sm">Advanced Diagnostic Equipment</h4>
+                                    <p class="text-xs text-slate-500">Equipped with cutting-edge lab and imaging tools for rapid results.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 rounded-lg bg-medical-50 text-medical-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-sm">Patient-Centric Philosophy</h4>
+                                    <p class="text-xs text-slate-500">Every treatment plan is customized to individual patient lifestyle and health profile.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-8 h-8 rounded-lg bg-medical-50 text-medical-600 flex items-center justify-center flex-shrink-0 mt-1">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-sm">Certified Specialist Doctors</h4>
+                                    <p class="text-xs text-slate-500">Board-certified professionals with extensive clinical experience.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-4">
+                            <button onclick="openBookingModal()" class="bg-slate-900 hover:bg-slate-800 text-white font-medium px-6 py-3 rounded-xl transition-all shadow-md">
+                                Schedule Consultation
+                            </button>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-6 grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80" alt="Clinic Interior" class="rounded-2xl object-cover h-64 w-full shadow-md aspect-doctor-photo" onerror="this.src='https://placehold.co/400x300/0284c7/ffffff?text=Clinic+Interior'">
+                        <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80" alt="Medical Equipment" class="rounded-2xl object-cover h-64 w-full shadow-md mt-8 aspect-doctor-photo" onerror="this.src='https://placehold.co/400x300/10b981/ffffff?text=Equipment'">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DOCTORS SECTION -->
+        <section id="doctors" class="py-20 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-brand-600 text-xs font-semibold uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full">Our Medical Team</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Meet Our Expert Physicians</h2>
+                    <p class="text-slate-600 text-base">Dedicated specialists committed to delivering exceptional healthcare with integrity and compassion. Check live real-time availability below.</p>
+                </div>
+                
+                <div id="public-doctors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Dynamically populated via JS with 3:2 photos and glowing availability status indicators -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIALTIES SECTION -->
+        <section id="specialties" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-medical-600 text-xs font-semibold uppercase tracking-widest bg-medical-50 px-3 py-1 rounded-full">Medical Specialties</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Comprehensive Care Departments</h2>
+                    <p class="text-slate-600 text-base">Explore our diverse medical specialties designed to cater to all your family health needs.</p>
+                </div>
+
+                <div id="public-specialties-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services" class="py-20 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-brand-600 text-xs font-semibold uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full">Our Services</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Professional Clinical Services</h2>
+                    <p class="text-slate-600 text-base">From routine preventative checkups to specialized diagnostic and treatment consultations.</p>
+                </div>
+
+                <div id="public-services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- APPOINTMENT BANNER / SECTION -->
+        <section class="py-16 bg-gradient-to-r from-brand-700 to-brand-900 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:20px_20px] opacity-10 pointer-events-none"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center justify-between">
+                    <div class="lg:col-span-8 space-y-3">
+                        <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">Ready to prioritize your health today?</h2>
+                        <p class="text-brand-100 text-base">Book your appointment online in under 2 minutes. Our team will contact you to confirm the schedule.</p>
+                    </div>
+                    <div class="lg:col-span-4 text-lg lg:text-right">
+                        <button onclick="openBookingModal()" class="bg-white hover:bg-slate-100 text-brand-900 font-bold px-8 py-4 rounded-xl shadow-xl transition-all hover:scale-105 inline-flex items-center space-x-3">
+                            <i class="fa-regular fa-calendar-check text-brand-600"></i>
+                            <span>Book Appointment Now</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS SECTION -->
+        <section class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-medical-600 text-xs font-semibold uppercase tracking-widest bg-medical-50 px-3 py-1 rounded-full">Patient Testimonials</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">What Our Patients Say</h2>
+                    <p class="text-slate-600 text-base">Read genuine feedback from patients who trusted us with their healthcare journey.</p>
+                </div>
+
+                <div id="public-testimonials-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ SECTION -->
+        <section id="faq" class="py-20 bg-slate-50">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16 space-y-4">
+                    <span class="text-brand-600 text-xs font-semibold uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full">Help & Support</span>
+                    <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">Frequently Asked Questions</h2>
+                    <p class="text-slate-600 text-base">Find answers to common questions regarding appointments, timings, and clinical procedures.</p>
+                </div>
+
+                <div id="public-faq-accordion" class="space-y-4">
+                    <!-- Dynamically populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" class="py-20 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                    <div class="lg:col-span-5 space-y-8">
+                        <div class="space-y-4">
+                            <span class="text-medical-600 text-xs font-semibold uppercase tracking-widest bg-medical-50 px-3 py-1 rounded-full">Get In Touch</span>
+                            <h2 class="text-3xl font-bold text-slate-900 tracking-tight">We Are Here For You</h2>
+                            <p class="text-slate-600 text-base">Have questions or need assistance? Reach out to our front desk team or visit our clinic.</p>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl flex-shrink-0">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">Clinic Address</h4>
+                                    <p id="footer-address-display" class="text-sm text-slate-600">742 Evergreen Terrace, Medical Suite 300, Springfield, OR 97477</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center text-xl flex-shrink-0">
+                                    <i class="fa-solid fa-phone"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">Phone & Emergency</h4>
+                                    <p class="text-sm text-slate-600">Clinic: <span id="footer-phone-display">+1 (800) 555-9876</span><br>Emergency: 911 or +1 (800) 555-EMER</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl flex-shrink-0">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-slate-900">Email Address</h4>
+                                    <p id="footer-email-display" class="text-sm text-slate-600">contact@auracareclinic.com<br>support@auracareclinic.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 bg-slate-50 p-8 lg:p-10 rounded-3xl border border-slate-100 shadow-sm">
+                        <h3 class="text-xl font-bold text-slate-900 mb-6">Send Us a Direct Message</h3>
+                        <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Your Name *</label>
+                                    <input type="text" id="contact-name" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Email Address *</label>
+                                    <input type="email" id="contact-email" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Phone Number</label>
+                                    <input type="tel" id="contact-phone" class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Subject *</label>
+                                    <input type="text" id="contact-subject" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Message *</label>
+                                <textarea id="contact-message" rows="4" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3.5 rounded-xl shadow-md transition-all">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-slate-900 text-slate-400 py-16 border-t border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white overflow-hidden" id="footer-logo-box">
+                                <i class="fa-solid fa-heart-pulse"></i>
+                            </div>
+                            <span class="text-lg font-bold text-white">AuraCare</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            AuraCare Medical Clinic is dedicated to providing superior healthcare services with advanced technology and professional physician expertise.
+                        </p>
+                        <div class="flex space-x-3 pt-2">
+                            <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 hover:bg-brand-600 hover:text-white transition-colors"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 hover:bg-brand-600 hover:text-white transition-colors"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 hover:bg-brand-600 hover:text-white transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+                            <a href="#" class="w-9 h-9 rounded-lg bg-slate-800 flex items-center justify-center text-slate-300 hover:bg-brand-600 hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <h4 class="text-white font-semibold text-sm uppercase tracking-wider">Quick Links</h4>
+                        <ul class="space-y-2.5 text-sm">
+                            <li><a href="#home" class="hover:text-white transition-colors">Home</a></li>
+                            <li><a href="#about" class="hover:text-white transition-colors">About Clinic</a></li>
+                            <li><a href="#doctors" class="hover:text-white transition-colors">Our Doctors</a></li>
+                            <li><a href="#specialties" class="hover:text-white transition-colors">Specialties</a></li>
+                            <li><a href="#services" class="hover:text-white transition-colors">Services</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-white font-semibold text-sm uppercase tracking-wider">Opening Hours</h4>
+                        <ul class="space-y-2.5 text-sm">
+                            <li class="flex justify-between"><span>Monday - Friday:</span> <span class="text-white font-medium">8:00 AM - 8:00 PM</span></li>
+                            <li class="flex justify-between"><span>Saturday:</span> <span class="text-white font-medium">9:00 AM - 6:00 PM</span></li>
+                            <li class="flex justify-between"><span>Sunday:</span> <span class="text-medical-400 font-medium">Emergency Only</span></li>
+                        </ul>
+                        <div class="pt-2">
+                            <button onclick="openAdminLogin()" class="text-xs text-slate-500 hover:text-slate-300 underline">Staff / Admin Login</button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h4 class="text-white font-semibold text-sm uppercase tracking-wider">Medical Disclaimer</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            The content provided on this website is for informational and educational purposes only and should not be considered personalized medical advice, diagnosis, or treatment.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500">
+                    <p>&copy; 2026 AuraCare Medical Clinic. All rights reserved.</p>
+                    <div class="flex space-x-6 mt-4 sm:mt-0">
+                        <a href="#" class="hover:text-slate-300">Privacy Policy</a>
+                        <a href="#" class="hover:text-slate-300">Terms of Service</a>
+                        <a href="#" class="hover:text-slate-300">Patient Rights</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ADMIN DASHBOARD CONTAINER (Initially Hidden) -->
+    <div id="admin-dashboard-view" class="hidden min-h-screen bg-slate-100 flex">
+        
+        <!-- Admin Sidebar -->
+        <aside id="admin-sidebar" class="w-64 bg-slate-900 text-slate-300 flex flex-col fixed inset-y-0 left-0 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300">
+            <div class="h-20 bg-slate-950 flex items-center px-6 space-x-3 border-b border-slate-800">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div>
+                    <h3 class="font-bold text-white text-sm">AuraCare Admin</h3>
+                    <span class="text-[10px] text-brand-400 font-semibold uppercase tracking-wider">Secure Portal</span>
+                </div>
+            </div>
+
+            <nav class="flex-1 px-4 py-6 space-y-1.5 custom-scrollbar overflow-y-auto">
+                <button onclick="switchAdminTab('dashboard')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors bg-brand-600 text-white" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-pie w-5"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button onclick="switchAdminTab('appointments')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800 hover:text-white" data-tab="appointments">
+                    <i class="fa-regular fa-calendar-days w-5"></i>
+                    <span>Appointments</span>
+                    <span id="badge-appointments-count" class="ml-auto bg-brand-500 text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+                </button>
+                <button onclick="switchAdminTab('patients')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800 hover:text-white" data-tab="patients">
+                    <i class="fa-solid fa-users w-5"></i>
+                    <span>Patients</span>
+                </button>
+                <button onclick="switchAdminTab('doctors')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800 hover:text-white" data-tab="doctors">
+                    <i class="fa-solid fa-user-doctor w-5"></i>
+                    <span>Doctors & Status</span>
+                </button>
+                <button onclick="switchAdminTab('services')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800 hover:text-white" data-tab="services">
+                    <i class="fa-solid fa-briefcase-medical w-5"></i>
+                    <span>Services</span>
+                </button>
+                <button onclick="switchAdminTab('messages')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800 hover:text-white" data-tab="messages">
+                    <i class="fa-regular fa-envelope w-5"></i>
+                    <span>Messages</span>
+                    <span id="badge-messages-count" class="ml-auto bg-medical-500 text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+                </button>
+                <button onclick="switchAdminTab('content')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800 hover:text-white" data-tab="content">
+                    <i class="fa-solid fa-file-pen w-5"></i>
+                    <span>Website Content</span>
+                </button>
+                <button onclick="switchAdminTab('settings')" class="admin-nav-btn w-full flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800 hover:text-white" data-tab="settings">
+                    <i class="fa-solid fa-gear w-5"></i>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <div class="p-4 border-t border-slate-800">
+                <button onclick="logoutAdmin()" class="w-full bg-slate-800 hover:bg-rose-600 hover:text-white text-slate-300 text-sm font-medium py-2.5 rounded-xl transition-all flex items-center justify-center space-x-2">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Log Out</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Admin Main Content Area -->
+        <div class="flex-1 flex flex-col lg:pl-64">
+            
+            <!-- Admin Topbar -->
+            <header class="h-20 bg-white border-b border-slate-200 px-6 flex items-center justify-between sticky top-0 z-40">
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleAdminSidebar()" class="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <div>
+                        <h2 id="admin-page-title" class="text-lg font-bold text-slate-900">Dashboard Overview</h2>
+                        <span class="text-xs text-slate-500">Welcome back, Administrator</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <button onclick="switchView('public')" class="hidden sm:flex items-center space-x-2 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2 rounded-xl transition-colors">
+                        <i class="fa-solid fa-globe"></i>
+                        <span>View Live Website</span>
+                    </button>
+                    <div class="flex items-center space-x-3 border-l border-slate-200 pl-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold">
+                            AD
+                        </div>
+                        <div class="hidden md:block">
+                            <span class="block text-xs font-bold text-slate-800">Admin User</span>
+                            <span class="block text-[10px] text-slate-500">superadmin@auracare.com</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Admin Dynamic Content Container -->
+            <main class="p-6 lg:p-8 space-y-6 flex-1 custom-scrollbar overflow-y-auto">
+                
+                <!-- TAB 1: DASHBOARD -->
+                <div id="admin-tab-dashboard" class="admin-tab-content space-y-6">
+                    <!-- Stat Cards -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase">Today's Appts</p>
+                                <h3 id="stat-today-appts" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl">
+                                <i class="fa-regular fa-calendar-days"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase">Pending Review</p>
+                                <h3 id="stat-pending-appts" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase">Confirmed</p>
+                                <h3 id="stat-confirmed-appts" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-check-circle"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase">Total Doctors</p>
+                                <h3 id="stat-total-doctors" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center text-xl">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                            <div>
+                                <p class="text-xs font-semibold text-slate-400 uppercase">Unread Msgs</p>
+                                <h3 id="stat-unread-messages" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+                            </div>
+                            <div class="w-12 h-12 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-xl">
+                                <i class="fa-regular fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts & Recent Activity -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div class="lg:col-span-8 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="font-bold text-slate-900">Appointment Analytics</h3>
+                            <div class="h-72">
+                                <canvas id="appointmentChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="lg:col-span-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                            <h3 class="font-bold text-slate-900">Quick Actions</h3>
+                            <div class="space-y-3">
+                                <button onclick="switchAdminTab('appointments')" class="w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-700 font-medium text-sm transition-colors flex items-center justify-between">
+                                    <span>Manage Appointments</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                                <button onclick="switchAdminTab('doctors'); openAddDoctorModal();" class="w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-700 font-medium text-sm transition-colors flex items-center justify-between">
+                                    <span>Add New Doctor</span>
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                <button onclick="switchAdminTab('services'); openAddServiceModal();" class="w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-700 font-medium text-sm transition-colors flex items-center justify-between">
+                                    <span>Add New Service</span>
+                                    <i class="fa-solid fa-plus"></i>
+                                </button>
+                                <button onclick="switchAdminTab('messages')" class="w-full text-left p-3 rounded-xl bg-slate-50 hover:bg-brand-50 hover:text-brand-700 font-medium text-sm transition-colors flex items-center justify-between">
+                                    <span>Review Messages</span>
+                                    <i class="fa-solid fa-envelope"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: APPOINTMENTS -->
+                <div id="admin-tab-appointments" class="admin-tab-content hidden space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div class="w-full sm:w-72">
+                                <input type="text" id="search-appointments" oninput="renderAdminAppointments()" placeholder="Search appointments..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            </div>
+                            <div class="flex items-center space-x-3 w-full sm:w-auto">
+                                <select id="filter-appointment-status" onchange="renderAdminAppointments()" class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+                                    <option value="ALL">All Status</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Confirmed">Confirmed</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-200 text-xs font-semibold text-slate-400 uppercase">
+                                        <th class="py-3 px-4">Ref ID</th>
+                                        <th class="py-3 px-4">Patient</th>
+                                        <th class="py-3 px-4">Phone</th>
+                                        <th class="py-3 px-4">Doctor</th>
+                                        <th class="py-3 px-4">Date & Time</th>
+                                        <th class="py-3 px-4">Type</th>
+                                        <th class="py-3 px-4">Status</th>
+                                        <th class="py-3 px-4 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-appointments-table-body" class="divide-y divide-slate-100 text-sm">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: PATIENTS -->
+                <div id="admin-tab-patients" class="admin-tab-content hidden space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-900">Patient Directory</h3>
+                            <input type="text" id="search-patients" oninput="renderAdminPatients()" placeholder="Search patients..." class="bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-sm focus:outline-none">
+                        </div>
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-200 text-xs font-semibold text-slate-400 uppercase">
+                                        <th class="py-3 px-4">Patient Name</th>
+                                        <th class="py-3 px-4">Phone</th>
+                                        <th class="py-3 px-4">Email</th>
+                                        <th class="py-3 px-4">Total Appointments</th>
+                                        <th class="py-3 px-4">Registered Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-patients-table-body" class="divide-y divide-slate-100 text-sm">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: DOCTORS & LIVE STATUS -->
+                <div id="admin-tab-doctors" class="admin-tab-content hidden space-y-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg">Manage Doctors & Live Availability</h3>
+                            <p class="text-xs text-slate-500">Toggle real-time status or add/remove doctor profiles.</p>
+                        </div>
+                        <button onclick="openAddDoctorModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm shadow-md flex items-center space-x-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add Doctor</span>
+                        </button>
+                    </div>
+                    <div id="admin-doctors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Populated via JS with status toggles -->
+                    </div>
+                </div>
+
+                <!-- TAB 5: SERVICES -->
+                <div id="admin-tab-services" class="admin-tab-content hidden space-y-6">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-bold text-slate-900 text-lg">Manage Clinic Services</h3>
+                        <button onclick="openAddServiceModal()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2.5 rounded-xl text-sm shadow-md flex items-center space-x-2">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Add Service</span>
+                        </button>
+                    </div>
+                    <div id="admin-services-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 6: MESSAGES -->
+                <div id="admin-tab-messages" class="admin-tab-content hidden space-y-6">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+                        <h3 class="font-bold text-slate-900">Contact Form Submissions</h3>
+                        <div class="overflow-x-auto custom-scrollbar">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="border-b border-slate-200 text-xs font-semibold text-slate-400 uppercase">
+                                        <th class="py-3 px-4">Name</th>
+                                        <th class="py-3 px-4">Subject</th>
+                                        <th class="py-3 px-4">Email / Phone</th>
+                                        <th class="py-3 px-4">Date</th>
+                                        <th class="py-3 px-4">Status</th>
+                                        <th class="py-3 px-4 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-messages-table-body" class="divide-y divide-slate-100 text-sm">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 7: WEBSITE CONTENT (CMS & LOGO UPLOAD) -->
+                <div id="admin-tab-content" class="admin-tab-content hidden space-y-6">
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6 max-w-4xl">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Website Content Management (CMS) & Logo (1:1 Ratio)</h3>
+                            <p class="text-xs text-slate-500">Update clinic branding, logo, and core headings persistently.</p>
+                        </div>
+                        <form onsubmit="handleCmsSave(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Clinic Logo Image URL (Strict 1:1 Square Constraint)</label>
+                                <div class="flex items-center space-x-4">
+                                    <input type="url" id="cms-logo-url" placeholder="https://..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" oninput="previewLogoUrl(this.value)">
+                                    <div class="w-12 h-12 rounded-xl bg-slate-100 border border-slate-200 overflow-hidden flex items-center justify-center flex-shrink-0">
+                                        <img id="logo-preview-box" src="" class="w-full h-full aspect-square-logo object-cover hidden" onerror="this.classList.add('hidden')">
+                                        <i class="fa-solid fa-heart-pulse text-brand-600 text-lg" id="logo-preview-fallback"></i>
+                                    </div>
+                                </div>
+                                <span class="text-[11px] text-slate-400 mt-1 block">Provide a square image URL. Automatically enforced to 1:1 ratio.</span>
+                            </div>
+                            <div class="pt-2">
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Hero Main Headline</label>
+                                <input type="text" id="cms-hero-title" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" value="Compassionate Healthcare You Can Trust">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Hero Subtitle Description</label>
+                                <textarea id="cms-hero-desc" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm">Expert medical care focused on your health, comfort and well-being. State-of-the-art diagnostic facilities and dedicated specialist physicians.</textarea>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Clinic Phone Number</label>
+                                    <input type="text" id="cms-phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" value="+1 (800) 555-9876">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Clinic Email</label>
+                                    <input type="text" id="cms-email" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" value="contact@auracareclinic.com">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Clinic Address</label>
+                                <input type="text" id="cms-address" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" value="742 Evergreen Terrace, Medical Suite 300, Springfield, OR 97477">
+                            </div>
+                            <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-3 rounded-xl text-sm shadow-md">
+                                Save Content & Logo Changes
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- TAB 8: SETTINGS -->
+                <div id="admin-tab-settings" class="admin-tab-content hidden space-y-6">
+                    <div class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6 max-w-4xl">
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-900">Clinic & Admin Settings</h3>
+                            <p class="text-xs text-slate-500">Manage administrator credentials and notification preferences.</p>
+                        </div>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Admin Username</label>
+                                <input type="text" disabled value="superadmin@auracare.com" class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-2.5 text-sm text-slate-500 cursor-not-allowed">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">New Password</label>
+                                <input type="password" placeholder="Enter new password" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm">
+                            </div>
+                            <button onclick="showNotification('Settings updated successfully', 'success')" class="bg-brand-600 hover:bg-brand-700 text-white font-medium px-6 py-3 rounded-xl text-sm shadow-md">
+                                Update Settings
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- APPOINTMENT BOOKING MODAL -->
+    <div id="booking-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeBookingModal()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="mb-6">
+                <span class="text-brand-600 text-xs font-semibold uppercase tracking-wider bg-brand-50 px-3 py-1 rounded-full">Secure Booking</span>
+                <h3 class="text-2xl font-bold text-slate-900 mt-2">Request an Appointment</h3>
+                <p class="text-xs text-slate-500">Fill in the details below. Our clinic coordinator will call you to confirm.</p>
+            </div>
+            <form id="appointment-booking-form" onsubmit="handleAppointmentSubmit(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Patient Full Name *</label>
+                        <input type="text" id="booking-name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Phone Number *</label>
+                        <input type="tel" id="booking-phone" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Email Address *</label>
+                        <input type="email" id="booking-email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Select Specialty *</label>
+                        <select id="booking-specialty" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+                            <!-- Populated via JS -->
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Preferred Doctor *</label>
+                        <select id="booking-doctor" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+                            <!-- Populated via JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Appointment Type *</label>
+                        <select id="booking-type" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+                            <option value="In-clinic consultation">In-Clinic Consultation</option>
+                            <option value="Video consultation">Video Consultation</option>
+                            <option value="Follow-up">Follow-up Visit</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Preferred Date *</label>
+                        <input type="date" id="booking-date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Preferred Time *</label>
+                        <select id="booking-time" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none">
+                            <option value="09:00 AM">09:00 AM</option>
+                            <option value="10:00 AM">10:00 AM</option>
+                            <option value="11:00 AM">11:00 AM</option>
+                            <option value="02:00 PM">02:00 PM</option>
+                            <option value="03:30 PM">03:30 PM</option>
+                            <option value="05:00 PM">05:00 PM</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Symptoms or Note (Optional)</label>
+                    <textarea id="booking-message" rows="3" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none" placeholder="Briefly describe your symptoms or reason for visit..."></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-brand-600/20 transition-all">
+                    Request Appointment
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div id="admin-login-modal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative">
+            <button onclick="closeAdminLogin()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center mb-8">
+                <div class="w-14 h-14 rounded-2xl bg-brand-600 text-white flex items-center justify-center text-2xl mx-auto shadow-lg shadow-brand-600/30 mb-4">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">Admin Portal Login</h3>
+                <p class="text-xs text-slate-500 mt-1">Authorized clinical personnel only</p>
+            </div>
+            <form onsubmit="handleAdminLoginSubmit(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Admin Email</label>
+                    <input type="email" id="admin-login-email" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" value="superadmin@auracare.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Password</label>
+                    <input type="password" id="admin-login-password" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500" value="password123">
+                </div>
+                <div class="flex items-center justify-between text-xs text-slate-500">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" class="rounded border-slate-300 text-brand-600">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" onclick="showNotification('Password reset link sent to registered admin email.', 'success')" class="text-brand-600 hover:underline">Forgot password?</a>
+                </div>
+                <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-3.5 rounded-xl shadow-lg transition-all">
+                    Sign In to Dashboard
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD DOCTOR MODAL -->
+    <div id="add-doctor-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeAddDoctorModal()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 mb-4">Add New Doctor Profile (3:2 Photo Ratio)</h3>
+            <form onsubmit="handleSaveDoctor(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Full Name *</label>
+                    <input type="text" id="doc-name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Qualification *</label>
+                        <input type="text" id="doc-qual" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" placeholder="MD, FRCP">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Specialization *</label>
+                        <input type="text" id="doc-spec" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" placeholder="Cardiology">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Experience (Years) *</label>
+                        <input type="text" id="doc-exp" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" placeholder="12 Years">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Initial Status *</label>
+                        <select id="doc-status" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm">
+                            <option value="Available">Currently Available</option>
+                            <option value="Busy">Offline / Busy</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Photo URL (Strict 3:2 Ratio Banner Style) *</label>
+                    <input type="url" id="doc-img" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" placeholder="https://images.unsplash.com/...">
+                    <span class="text-[11px] text-slate-400 mt-1 block">Renders with strict 3:2 landscape/portrait constraint.</span>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Bio / Introduction *</label>
+                    <textarea id="doc-bio" rows="3" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-md">
+                    Save Doctor Profile
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD SERVICE MODAL -->
+    <div id="add-service-modal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closeAddServiceModal()" class="absolute top-6 right-6 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-slate-900 mb-4">Add New Clinical Service</h3>
+            <form onsubmit="handleSaveService(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Service Name *</label>
+                    <input type="text" id="srv-name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">FontAwesome Icon Class *</label>
+                        <input type="text" id="srv-icon" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" value="fa-solid fa-stethoscope">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Price / Fee</label>
+                        <input type="text" id="srv-price" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm" value="$150">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Description *</label>
+                    <textarea id="srv-desc" rows="3" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2.5 text-sm"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-xl shadow-md">
+                    Save Service
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION TOAST NOTIFICATION -->
+    <div id="toast-notification" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 max-w-sm bg-slate-900 text-white px-5 py-4 rounded-2xl shadow-2xl flex items-center space-x-3 border border-slate-800">
+        <div id="toast-icon" class="text-medical-400 text-xl"><i class="fa-solid fa-circle-check"></i></div>
+        <div>
+            <h5 id="toast-title" class="font-bold text-sm">Success</h5>
+            <p id="toast-message" class="text-xs text-slate-300">Action completed successfully.</p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT APP LOGIC WITH PERSISTENCE & ASPECT RATIOS -->
+    <script>
+        // Default State Data Structure
+        const defaultState = {
+            doctors: [
+                { id: 1, name: "Dr. Sarah Jenkins", qual: "MD, FACC", spec: "Cardiology", exp: "15 Years", bio: "Chief Cardiologist specializing in preventative heart care and advanced cardiac imaging.", img: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=600&q=80", status: "Available" },
+                { id: 2, name: "Dr. Robert Chen", qual: "MD, FAAP", spec: "Pediatrics", exp: "12 Years", bio: "Passionate pediatrician dedicated to adolescent wellness, vaccinations, and developmental care.", img: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=600&q=80", status: "Available" },
+                { id: 3, name: "Dr. Elena Rostova", qual: "MD, FAAD", spec: "Dermatology", exp: "10 Years", bio: "Expert in clinical dermatology, dermatopathology, and advanced skin rejuvenation therapies.", img: "https://images.unsplash.com/photo-1594824813576-29177a67265a?auto=format&fit=crop&w=600&q=80", status: "Busy" },
+                { id: 4, name: "Dr. Marcus Vance", qual: "MS, Ortho", spec: "Orthopedics", exp: "18 Years", bio: "Specialized in joint replacement, sports injury arthroscopy, and spine rehabilitation.", img: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=600&q=80", status: "Available" }
+            ],
+            specialties: [
+                { name: "General Medicine", icon: "fa-solid fa-user-doctor", desc: "Comprehensive primary care and health screenings." },
+                { name: "Cardiology", icon: "fa-solid fa-heart-pulse", desc: "Heart disease diagnosis, ECG, and cardiovascular health." },
+                { name: "Pediatrics", icon: "fa-solid fa-child", desc: "Specialized healthcare for infants, children, and teens." },
+                { name: "Dermatology", icon: "fa-solid fa-hand-dots", desc: "Skin, hair, and nail clinical treatments." },
+                { name: "Orthopedics", icon: "fa-solid fa-bone", desc: "Bone, joint, ligament, and muscle care." },
+                { name: "Gynecology", icon: "fa-solid fa-venus", desc: "Women's reproductive health and wellness." },
+                { name: "ENT", icon: "fa-solid fa-head-side-cough", desc: "Ear, nose, throat, and sinus care." },
+                { name: "Dental Care", icon: "fa-solid fa-tooth", desc: "Preventative and restorative dental hygiene." }
+            ],
+            services: [
+                { id: 1, name: "General Consultation", icon: "fa-solid fa-stethoscope", price: "$120", desc: "Thorough physical examination and health status assessment by senior physicians." },
+                { id: 2, name: "Diagnostic Health Checkup", icon: "fa-solid fa-microscope", price: "$250", desc: "Complete blood work, metabolic panels, and cardiovascular screening tests." },
+                { id: 3, name: "Cardiology Screening", icon: "fa-solid fa-heart-pulse", price: "$200", desc: "ECG, blood pressure monitoring, and risk assessment for heart conditions." },
+                { id: 4, name: "Pediatric Wellness Exam", icon: "fa-solid fa-baby", price: "$100", desc: "Growth monitoring, developmental milestone evaluation, and immunization schedules." },
+                { id: 5, name: "Follow-up Consultation", icon: "fa-solid fa-calendar-check", price: "$80", desc: "Review of test results and adjustment of ongoing treatment plans." },
+                { id: 6, name: "Preventive Care Counseling", icon: "fa-solid fa-shield-heart", price: "$150", desc: "Lifestyle, nutrition, and personalized longevity planning with specialists." }
+            ],
+            appointments: [
+                { id: "APT-9482", patientName: "Emily Watson", phone: "+1 (555) 234-5678", email: "emily@example.com", doctor: "Dr. Sarah Jenkins", specialty: "Cardiology", date: "2026-03-25", time: "10:00 AM", type: "In-clinic consultation", message: "Chest discomfort upon exertion.", status: "Confirmed", createdAt: "2026-03-18" },
+                { id: "APT-8371", patientName: "Michael Chang", phone: "+1 (555) 876-5432", email: "michael@example.com", doctor: "Dr. Robert Chen", specialty: "Pediatrics", date: "2026-03-26", time: "02:00 PM", type: "Video consultation", message: "Annual checkup for 8-year old.", status: "Pending", createdAt: "2026-03-19" }
+            ],
+            messages: [
+                { id: 1, name: "David Miller", email: "david@example.com", phone: "+1 (555) 999-8877", subject: "Insurance Coverage Inquiry", message: "Do you accept Blue Cross Blue Shield insurance for cardiology visits?", status: "Unread", date: "2026-03-19" }
+            ],
+            testimonials: [
+                { name: "Amanda Vance", role: "Patient", quote: "The doctors at AuraCare are exceptionally thorough. Dr. Jenkins took time to explain my cardiology report in detail.", rating: 5 },
+                { name: "Jonathan Reed", role: "Patient", quote: "Very clean clinic, minimal wait times, and friendly front desk staff. Highly recommend their pediatric department.", rating: 5 }
+            ],
+            faqs: [
+                { q: "How can I book an appointment?", a: "You can book an appointment easily online using our 'Book Appointment' button, or call our front desk directly at +1 (800) 555-9876." },
+                { q: "What are the clinic timings?", a: "We are open Monday to Friday from 8:00 AM to 8:00 PM, and Saturday from 9:00 AM to 6:00 PM. Sunday is reserved for emergency care." }
+            ],
+            cms: {
+                heroTitle: "Compassionate Healthcare You Can Trust",
+                heroDesc: "Expert medical care focused on your health, comfort and well-being. State-of-the-art diagnostic facilities and dedicated specialist physicians providing personalized treatment plans.",
+                phone: "+1 (800) 555-9876",
+                email: "contact@auracareclinic.com",
+                address: "742 Evergreen Terrace, Medical Suite 300, Springfield, OR 97477",
+                logoUrl: ""
+            }
+        };
+
+        // Load State from LocalStorage or Fallback to Default
+        let state = JSON.parse(localStorage.getItem('auracare_clinic_state')) || defaultState;
+
+        function saveStateToStorage() {
+            localStorage.setItem('auracare_clinic_state', JSON.stringify(state));
+        }
+
+        window.onload = function() {
+            applyCmsData();
+            renderPublicDoctors();
+            renderPublicSpecialties();
+            renderPublicServices();
+            renderPublicTestimonials();
+            renderPublicFaqs();
+            populateBookingDropdowns();
+            renderAdminDashboardStats();
+            renderAdminAppointments();
+            renderAdminPatients();
+            renderAdminDoctors();
+            renderAdminServices();
+            renderAdminMessages();
+        };
+
+        // Apply CMS & 1:1 Logo
+        function applyCmsData() {
+            if (!state.cms) return;
+            if (state.cms.heroTitle) document.getElementById('hero-title-display').innerHTML = state.cms.heroTitle.replace('Healthcare', '<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-medical-600">Healthcare</span>');
+            if (state.cms.heroDesc) document.getElementById('hero-desc-display').innerText = state.cms.heroDesc;
+            if (state.cms.phone) {
+                document.getElementById('footer-phone-display').innerText = state.cms.phone;
+            }
+            if (state.cms.address) document.getElementById('footer-address-display').innerText = state.cms.address;
+            
+            // 1:1 Logo Render
+            const logoContainer = document.getElementById('nav-logo-container');
+            const footerLogoBox = document.getElementById('footer-logo-box');
+            if (state.cms.logoUrl) {
+                logoContainer.innerHTML = `<img src="${state.cms.logoUrl}" class="w-full h-full aspect-square-logo object-cover" onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-heart-pulse text-xl\\'></i>'">`;
+                footerLogoBox.innerHTML = `<img src="${state.cms.logoUrl}" class="w-full h-full aspect-square-logo object-cover" onerror="this.parentElement.innerHTML='<i class=\\'fa-solid fa-heart-pulse\\'></i>'">`;
+                document.getElementById('cms-logo-url').value = state.cms.logoUrl;
+                document.getElementById('logo-preview-box').src = state.cms.logoUrl;
+                document.getElementById('logo-preview-box').classList.remove('hidden');
+                document.getElementById('logo-preview-fallback').classList.add('hidden');
+            }
+        }
+
+        function previewLogoUrl(url) {
+            const previewBox = document.getElementById('logo-preview-box');
+            const fallback = document.getElementById('logo-preview-fallback');
+            if (url) {
+                previewBox.src = url;
+                previewBox.classList.remove('hidden');
+                fallback.classList.add('hidden');
+            } else {
+                previewBox.classList.add('hidden');
+                fallback.classList.remove('hidden');
+            }
+        }
+
+        function handleCmsSave(e) {
+            e.preventDefault();
+            state.cms = {
+                heroTitle: document.getElementById('cms-hero-title').value,
+                heroDesc: document.getElementById('cms-hero-desc').value,
+                phone: document.getElementById('cms-phone').value,
+                email: document.getElementById('cms-email').value,
+                address: document.getElementById('cms-address').value,
+                logoUrl: document.getElementById('cms-logo-url').value
+            };
+            saveStateToStorage();
+            applyCmsData();
+            showNotification('Website content & 1:1 logo saved permanently!', 'success');
+        }
+
+        // Render Public Doctors with 3:2 Photo Ratio & Glowing Availability Status Indicators
+        function renderPublicDoctors() {
+            const grid = document.getElementById('public-doctors-grid');
+            if (!grid) return;
+            grid.innerHTML = state.doctors.map(doc => {
+                const isAvailable = doc.status === 'Available';
+                return `
+                <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group">
+                    <div class="relative overflow-hidden h-64 bg-slate-100">
+                        <!-- Strict 3:2 Aspect Ratio Banner Style Image -->
+                        <img src="${doc.img}" alt="${doc.name}" class="w-full h-full aspect-doctor-photo object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/0284c7/ffffff?text=Doctor'">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-brand-700 shadow-sm">
+                            ${doc.spec}
+                        </div>
+                        <!-- Live Availability Glowing Indicator Badge -->
+                        <div class="absolute bottom-4 left-4 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl text-xs font-semibold shadow-md flex items-center space-x-2">
+                            <span class="w-2.5 h-2.5 rounded-full ${isAvailable ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-rose-500 shadow-[0_0_8px_#f43f5e]'} animate-pulse"></span>
+                            <span class="${isAvailable ? 'text-emerald-700' : 'text-rose-700'}">${isAvailable ? 'Currently Available' : 'Offline / Busy'}</span>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col justify-between space-y-4">
+                        <div class="space-y-1">
+                            <span class="text-xs font-semibold text-medical-600 uppercase tracking-wider">${doc.qual}</span>
+                            <h3 class="text-xl font-bold text-slate-900">${doc.name}</h3>
+                            <p class="text-xs font-medium text-slate-500">Experience: ${doc.exp}</p>
+                            <p class="text-sm text-slate-600 pt-2 line-clamp-2">${doc.bio}</p>
+                        </div>
+                        <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                            <button onclick="openBookingModalForDoctor('${doc.name}', '${doc.spec}')" class="w-full bg-brand-50 hover:bg-brand-600 text-brand-700 hover:text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors text-center flex items-center justify-center space-x-2">
+                                <i class="fa-regular fa-calendar-check"></i>
+                                <span>Book Appointment</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        function renderPublicSpecialties() {
+            const grid = document.getElementById('public-specialties-grid');
+            if (!grid) return;
+            grid.innerHTML = state.specialties.map(spec => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:border-brand-500 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mb-4 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                        <i class="${spec.icon}"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 text-lg mb-1">${spec.name}</h3>
+                    <p class="text-xs text-slate-500 leading-relaxed">${spec.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderPublicServices() {
+            const grid = document.getElementById('public-services-grid');
+            if (!grid) return;
+            grid.innerHTML = state.services.map(srv => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm hover:shadow-lg transition-all flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="w-12 h-12 rounded-xl bg-medical-50 text-medical-600 flex items-center justify-center text-xl">
+                                <i class="${srv.icon}"></i>
+                            </div>
+                            <span class="text-sm font-bold text-brand-700 bg-brand-50 px-3 py-1 rounded-full">${srv.price}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-xl">${srv.name}</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">${srv.desc}</p>
+                    </div>
+                    <div class="pt-6 border-t border-slate-100 mt-6">
+                        <button onclick="openBookingModal()" class="text-xs font-bold text-brand-600 hover:text-brand-700 flex items-center space-x-2">
+                            <span>Book This Service</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPublicTestimonials() {
+            const grid = document.getElementById('public-testimonials-grid');
+            if (!grid) return;
+            grid.innerHTML = state.testimonials.map(t => `
+                <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200/80 shadow-sm flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="flex text-amber-400 space-x-1 text-sm">
+                            ${'<i class="fa-solid fa-star"></i>'.repeat(t.rating)}
+                        </div>
+                        <p class="text-sm text-slate-700 italic leading-relaxed">"${t.quote}"</p>
+                    </div>
+                    <div class="flex items-center space-x-3 pt-4 border-t border-slate-200/60">
+                        <div class="w-10 h-10 rounded-full bg-brand-600 text-white font-bold flex items-center justify-center text-sm">
+                            ${t.name.charAt(0)}
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-sm">${t.name}</h4>
+                            <p class="text-xs text-slate-500">${t.role}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPublicFaqs() {
+            const accordion = document.getElementById('public-faq-accordion');
+            if (!accordion) return;
+            accordion.innerHTML = state.faqs.map((faq, idx) => `
+                <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+                    <button onclick="toggleFaq(${idx})" class="w-full p-6 text-left font-bold text-slate-900 flex items-center justify-between focus:outline-none">
+                        <span>${faq.q}</span>
+                        <i id="faq-icon-${idx}" class="fa-solid fa-chevron-down text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="faq-body-${idx}" class="hidden px-6 pb-6 text-sm text-slate-600 leading-relaxed border-t border-slate-100 pt-4">
+                        ${faq.a}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleFaq(idx) {
+            const body = document.getElementById(`faq-body-${idx}`);
+            const icon = document.getElementById(`faq-icon-${idx}`);
+            if (body.classList.contains('hidden')) {
+                body.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                body.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+
+        function populateBookingDropdowns() {
+            const specSelect = document.getElementById('booking-specialty');
+            const docSelect = document.getElementById('booking-doctor');
+            if (!specSelect || !docSelect) return;
+
+            specSelect.innerHTML = state.specialties.map(s => `<option value="${s.name}">${s.name}</option>`).join('');
+            docSelect.innerHTML = state.doctors.map(d => `<option value="${d.name}">${d.name} (${d.spec})</option>`).join('');
+        }
+
+        function openBookingModal() {
+            document.getElementById('booking-modal').classList.remove('hidden');
+            document.getElementById('booking-modal').classList.add('flex');
+        }
+
+        function closeBookingModal() {
+            document.getElementById('booking-modal').classList.remove('flex');
+            document.getElementById('booking-modal').classList.add('hidden');
+        }
+
+        function openBookingModalForDoctor(docName, specName) {
+            openBookingModal();
+            const docSelect = document.getElementById('booking-doctor');
+            const specSelect = document.getElementById('booking-specialty');
+            if (docSelect) docSelect.value = docName;
+            if (specSelect) specSelect.value = specName;
+        }
+
+        function handleAppointmentSubmit(e) {
+            e.preventDefault();
+            const newApt = {
+                id: 'APT-' + Math.floor(1000 + Math.random() * 9000),
+                patientName: document.getElementById('booking-name').value,
+                phone: document.getElementById('booking-phone').value,
+                email: document.getElementById('booking-email').value,
+                doctor: document.getElementById('booking-doctor').value,
+                specialty: document.getElementById('booking-specialty').value,
+                type: document.getElementById('booking-type').value,
+                date: document.getElementById('booking-date').value,
+                time: document.getElementById('booking-time').value,
+                message: document.getElementById('booking-message').value,
+                status: 'Pending',
+                createdAt: new Date().toISOString().split('T')[0]
+            };
+
+            state.appointments.unshift(newApt);
+            saveStateToStorage();
+            closeBookingModal();
+            document.getElementById('appointment-booking-form').reset();
+            showNotification(`Appointment request sent! Ref ID: ${newApt.id}`, 'success');
+            renderAdminDashboardStats();
+            renderAdminAppointments();
+            renderAdminPatients();
+        }
+
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            const newMsg = {
+                id: state.messages.length + 1,
+                name: document.getElementById('contact-name').value,
+                email: document.getElementById('contact-email').value,
+                phone: document.getElementById('contact-phone').value,
+                subject: document.getElementById('contact-subject').value,
+                message: document.getElementById('contact-message').value,
+                status: 'Unread',
+                date: new Date().toISOString().split('T')[0]
+            };
+            state.messages.unshift(newMsg);
+            saveStateToStorage();
+            document.getElementById('contact-form').reset();
+            showNotification('Message sent successfully! Our team will get back to you soon.', 'success');
+            renderAdminDashboardStats();
+            renderAdminMessages();
+        }
+
+        function openAdminLogin() {
+            document.getElementById('admin-login-modal').classList.remove('hidden');
+            document.getElementById('admin-login-modal').classList.add('flex');
+        }
+
+        function closeAdminLogin() {
+            document.getElementById('admin-login-modal').classList.remove('flex');
+            document.getElementById('admin-login-modal').classList.add('hidden');
+        }
+
+        function handleAdminLoginSubmit(e) {
+            e.preventDefault();
+            closeAdminLogin();
+            switchView('admin');
+            showNotification('Logged into Admin Dashboard successfully', 'success');
+        }
+
+        function logoutAdmin() {
+            switchView('public');
+            showNotification('Logged out successfully', 'info');
+        }
+
+        function switchView(view) {
+            const publicView = document.getElementById('public-website-view');
+            const adminView = document.getElementById('admin-dashboard-view');
+            if (view === 'admin') {
+                publicView.classList.add('hidden');
+                adminView.classList.remove('hidden');
+                initAppointmentChart();
+            } else {
+                adminView.classList.add('hidden');
+                publicView.classList.remove('hidden');
+            }
+        }
+
+        function toggleAdminSidebar() {
+            const sidebar = document.getElementById('admin-sidebar');
+            sidebar.classList.toggle('-translate-x-full');
+        }
+
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.admin-nav-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white');
+                btn.classList.add('text-slate-400', 'hover:bg-slate-800', 'hover:text-white');
+            });
+
+            document.getElementById(`admin-tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-400', 'hover:bg-slate-800', 'hover:text-white');
+                activeBtn.classList.add('bg-brand-600', 'text-white');
+            }
+
+            const titles = {
+                dashboard: 'Dashboard Overview',
+                appointments: 'Appointment Management',
+                patients: 'Patient Directory',
+                doctors: 'Doctor Management & Live Status',
+                services: 'Clinical Services',
+                messages: 'Contact Messages',
+                content: 'Website Content Management (CMS)',
+                settings: 'Clinic & Admin Settings'
+            };
+            document.getElementById('admin-page-title').innerText = titles[tabName] || 'Admin Dashboard';
+            if (window.innerWidth < 1024) {
+                toggleAdminSidebar();
+            }
+        }
+
+        let appointmentChartInstance = null;
+        function initAppointmentChart() {
+            const ctx = document.getElementById('appointmentChart');
+            if (!ctx) return;
+            if (appointmentChartInstance) appointmentChartInstance.destroy();
+
+            appointmentChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                    datasets: [{
+                        label: 'Appointments',
+                        data: [12, 19, 15, 22, 28, 18, 5],
+                        backgroundColor: '#0284c7',
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#f1f5f9' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        function renderAdminDashboardStats() {
+            const todayStr = new Date().toISOString().split('T')[0];
+            const todayCount = state.appointments.filter(a => a.date === todayStr).length;
+            const pendingCount = state.appointments.filter(a => a.status === 'Pending').length;
+            const confirmedCount = state.appointments.filter(a => a.status === 'Confirmed').length;
+            const unreadMsgCount = state.messages.filter(m => m.status === 'Unread').length;
+
+            document.getElementById('stat-today-appts').innerText = todayCount;
+            document.getElementById('stat-pending-appts').innerText = pendingCount;
+            document.getElementById('stat-confirmed-appts').innerText = confirmedCount;
+            document.getElementById('stat-total-doctors').innerText = state.doctors.length;
+            document.getElementById('stat-unread-messages').innerText = unreadMsgCount;
+
+            document.getElementById('badge-appointments-count').innerText = pendingCount;
+            document.getElementById('badge-messages-count').innerText = unreadMsgCount;
+        }
+
+        function renderAdminAppointments() {
+            const tbody = document.getElementById('admin-appointments-table-body');
+            const search = document.getElementById('search-appointments').value.toLowerCase();
+            const statusFilter = document.getElementById('filter-appointment-status').value;
+            if (!tbody) return;
+
+            const filtered = state.appointments.filter(apt => {
+                const matchSearch = apt.patientName.toLowerCase().includes(search) || apt.id.toLowerCase().includes(search) || apt.doctor.toLowerCase().includes(search);
+                const matchStatus = statusFilter === 'ALL' || apt.status === statusFilter;
+                return matchSearch && matchStatus;
+            });
+
+            tbody.innerHTML = filtered.map(apt => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-3 px-4 font-bold text-slate-900">${apt.id}</td>
+                    <td class="py-3 px-4 font-medium text-slate-800">${apt.patientName}</td>
+                    <td class="py-3 px-4 text-slate-600">${apt.phone}</td>
+                    <td class="py-3 px-4 text-slate-600">${apt.doctor}</td>
+                    <td class="py-3 px-4 text-slate-600">${apt.date} <span class="text-xs text-slate-400 block">${apt.time}</span></td>
+                    <td class="py-3 px-4 text-slate-600 text-xs">${apt.type}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${
+                            apt.status === 'Confirmed' ? 'bg-medical-50 text-medical-700' :
+                            apt.status === 'Pending' ? 'bg-amber-50 text-amber-700' :
+                            apt.status === 'Completed' ? 'bg-brand-50 text-brand-700' : 'bg-rose-50 text-rose-700'
+                        }">${apt.status}</span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-2">
+                        <button onclick="updateAppointmentStatus('${apt.id}', 'Confirmed')" class="text-xs bg-medical-50 text-medical-700 hover:bg-medical-100 px-2.5 py-1.5 rounded-lg font-medium" title="Confirm">Confirm</button>
+                        <button onclick="updateAppointmentStatus('${apt.id}', 'Cancelled')" class="text-xs bg-rose-50 text-rose-700 hover:bg-rose-100 px-2.5 py-1.5 rounded-lg font-medium" title="Cancel">Cancel</button>
+                        <button onclick="deleteAppointment('${apt.id}')" class="text-xs text-slate-400 hover:text-rose-600 p-1.5"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateAppointmentStatus(id, newStatus) {
+            const apt = state.appointments.find(a => a.id === id);
+            if (apt) {
+                apt.status = newStatus;
+                saveStateToStorage();
+                renderAdminAppointments();
+                renderAdminDashboardStats();
+                showNotification(`Appointment ${id} status updated to ${newStatus}`, 'success');
+            }
+        }
+
+        function deleteAppointment(id) {
+            state.appointments = state.appointments.filter(a => a.id !== id);
+            saveStateToStorage();
+            renderAdminAppointments();
+            renderAdminDashboardStats();
+            showNotification(`Appointment ${id} deleted`, 'info');
+        }
+
+        function renderAdminPatients() {
+            const tbody = document.getElementById('admin-patients-table-body');
+            const search = document.getElementById('search-patients').value.toLowerCase();
+            if (!tbody) return;
+
+            const patientMap = {};
+            state.appointments.forEach(a => {
+                if (!patientMap[a.phone]) {
+                    patientMap[a.phone] = { name: a.patientName, phone: a.phone, email: a.email, count: 0, date: a.createdAt };
+                }
+                patientMap[a.phone].count++;
+            });
+
+            const patients = Object.values(patientMap).filter(p => p.name.toLowerCase().includes(search));
+
+            tbody.innerHTML = patients.map(p => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-3 px-4 font-bold text-slate-900">${p.name}</td>
+                    <td class="py-3 px-4 text-slate-600">${p.phone}</td>
+                    <td class="py-3 px-4 text-slate-600">${p.email}</td>
+                    <td class="py-3 px-4"><span class="bg-brand-50 text-brand-700 px-2.5 py-1 rounded-full text-xs font-semibold">${p.count} Visits</span></td>
+                    <td class="py-3 px-4 text-slate-600 text-xs">${p.date}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Render Admin Doctors with Live Status Toggle & 3:2 Photo Ratio
+        function renderAdminDoctors() {
+            const grid = document.getElementById('admin-doctors-grid');
+            if (!grid) return;
+            grid.innerHTML = state.doctors.map(doc => {
+                const isAvailable = doc.status === 'Available';
+                return `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <img src="${doc.img}" class="w-16 h-12 rounded-xl object-cover aspect-doctor-photo" onerror="this.src='https://placehold.co/100x66/0284c7/ffffff?text=Doc'">
+                        <div>
+                            <h4 class="font-bold text-slate-900">${doc.name}</h4>
+                            <span class="text-xs text-brand-600 font-semibold">${doc.spec}</span>
+                            <p class="text-xs text-slate-400">${doc.qual} • ${doc.exp}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-50 p-3 rounded-xl">
+                        <span class="text-xs font-bold text-slate-700">Live Status:</span>
+                        <button onclick="toggleDoctorStatus(${doc.id})" class="px-3 py-1 rounded-full text-xs font-bold transition-all flex items-center space-x-1.5 ${isAvailable ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                            <span class="w-2 h-2 rounded-full ${isAvailable ? 'bg-emerald-500' : 'bg-rose-500'}"></span>
+                            <span>${isAvailable ? 'Available' : 'Busy / Offline'}</span>
+                        </button>
+                    </div>
+                    <p class="text-xs text-slate-600 line-clamp-2">${doc.bio}</p>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-slate-400">ID: #${doc.id}</span>
+                        <button onclick="deleteDoctor(${doc.id})" class="text-xs text-rose-600 hover:underline font-medium">Remove Profile</button>
+                    </div>
+                </div>
+            `;
+            }).join('');
+        }
+
+        // Toggle Live Status Function
+        function toggleDoctorStatus(docId) {
+            const doc = state.doctors.find(d => d.id === docId);
+            if (doc) {
+                doc.status = doc.status === 'Available' ? 'Busy' : 'Available';
+                saveStateToStorage();
+                renderAdminDoctors();
+                renderPublicDoctors();
+                showNotification(`Dr. ${doc.name} status updated to ${doc.status}`, 'success');
+            }
+        }
+
+        function openAddDoctorModal() {
+            document.getElementById('add-doctor-modal').classList.remove('hidden');
+            document.getElementById('add-doctor-modal').classList.add('flex');
+        }
+
+        function closeAddDoctorModal() {
+            document.getElementById('add-doctor-modal').classList.remove('flex');
+            document.getElementById('add-doctor-modal').classList.add('hidden');
+        }
+
+        function handleSaveDoctor(e) {
+            e.preventDefault();
+            const newDoc = {
+                id: Date.now(),
+                name: document.getElementById('doc-name').value,
+                qual: document.getElementById('doc-qual').value,
+                spec: document.getElementById('doc-spec').value,
+                exp: document.getElementById('doc-exp').value + ' Years',
+                bio: document.getElementById('doc-bio').value,
+                img: document.getElementById('doc-img').value,
+                status: document.getElementById('doc-status').value
+            };
+            state.doctors.push(newDoc);
+            saveStateToStorage();
+            closeAddDoctorModal();
+            renderAdminDoctors();
+            renderPublicDoctors();
+            populateBookingDropdowns();
+            renderAdminDashboardStats();
+            showNotification('New doctor profile added with 3:2 ratio!', 'success');
+        }
+
+        function deleteDoctor(id) {
+            state.doctors = state.doctors.filter(d => d.id !== id);
+            saveStateToStorage();
+            renderAdminDoctors();
+            renderPublicDoctors();
+            populateBookingDropdowns();
+            renderAdminDashboardStats();
+            showNotification('Doctor profile removed', 'info');
+        }
+
+        function renderAdminServices() {
+            const grid = document.getElementById('admin-services-grid');
+            if (!grid) return;
+            grid.innerHTML = state.services.map(srv => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <i class="${srv.icon} text-xl text-brand-600"></i>
+                            <span class="text-xs font-bold text-brand-700 bg-brand-50 px-2.5 py-1 rounded-full">${srv.price}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-base">${srv.name}</h4>
+                        <p class="text-xs text-slate-600 mt-1 line-clamp-2">${srv.desc}</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs text-medical-600 font-semibold bg-medical-50 px-2.5 py-1 rounded-full">Active</span>
+                        <button onclick="deleteService(${srv.id})" class="text-xs text-rose-600 hover:underline font-medium">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openAddServiceModal() {
+            document.getElementById('add-service-modal').classList.remove('hidden');
+            document.getElementById('add-service-modal').classList.add('flex');
+        }
+
+        function closeAddServiceModal() {
+            document.getElementById('add-service-modal').classList.remove('flex');
+            document.getElementById('add-service-modal').classList.add('hidden');
+        }
+
+        function handleSaveService(e) {
+            e.preventDefault();
+            const newSrv = {
+                id: Date.now(),
+                name: document.getElementById('srv-name').value,
+                icon: document.getElementById('srv-icon').value,
+                price: document.getElementById('srv-price').value,
+                desc: document.getElementById('srv-desc').value
+            };
+            state.services.push(newSrv);
+            saveStateToStorage();
+            renderAdminServices();
+            renderPublicServices();
+            showNotification('New service added successfully', 'success');
+        }
+
+        function deleteService(id) {
+            state.services = state.services.filter(s => s.id !== id);
+            saveStateToStorage();
+            renderAdminServices();
+            renderPublicServices();
+            showNotification('Service removed', 'info');
+        }
+
+        function renderAdminMessages() {
+            const tbody = document.getElementById('admin-messages-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = state.messages.map(m => `
+                <tr class="hover:bg-slate-50 transition-colors">
+                    <td class="py-3 px-4 font-bold text-slate-900">${m.name}<span class="block text-xs text-slate-400 font-normal">${m.email}</span></td>
+                    <td class="py-3 px-4 font-medium text-slate-800">${m.subject}</td>
+                    <td class="py-3 px-4 text-slate-600 text-xs">${m.phone || 'N/A'}</td>
+                    <td class="py-3 px-4 text-slate-600 text-xs">${m.date}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${m.status === 'Unread' ? 'bg-rose-50 text-rose-700' : 'bg-slate-100 text-slate-600'}">${m.status}</span>
+                    </td>
+                    <td class="py-3 px-4 text-right space-x-2">
+                        <button onclick="toggleMessageRead(${m.id})" class="text-xs bg-slate-100 text-slate-700 hover:bg-slate-200 px-2.5 py-1.5 rounded-lg font-medium">Toggle Read</button>
+                        <button onclick="deleteMessage(${m.id})" class="text-xs text-slate-400 hover:text-rose-600 p-1.5"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function toggleMessageRead(id) {
+            const m = state.messages.find(x => x.id === id);
+            if (m) {
+                m.status = m.status === 'Unread' ? 'Read' : 'Unread';
+                saveStateToStorage();
+                renderAdminMessages();
+                renderAdminDashboardStats();
+            }
+        }
+
+        function deleteMessage(id) {
+            state.messages = state.messages.filter(x => x.id !== id);
+            saveStateToStorage();
+            renderAdminMessages();
+            renderAdminDashboardStats();
+            showNotification('Message deleted', 'info');
+        }
+
+        function showNotification(message, type = 'success') {
+            const toast = document.getElementById('toast-notification');
+            const title = document.getElementById('toast-title');
+            const msg = document.getElementById('toast-message');
+            const icon = document.getElementById('toast-icon');
+
+            title.innerText = type === 'success' ? 'Success' : type === 'info' ? 'Notification' : 'Alert';
+            msg.innerText = message;
+            icon.innerHTML = type === 'success' ? '<i class="fa-solid fa-circle-check text-medical-400"></i>' : '<i class="fa-solid fa-circle-info text-brand-400"></i>';
+
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
